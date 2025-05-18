@@ -1,0 +1,14 @@
+.time {
+    display: flex;
+    align-items: center;
+    margin: 35px 0 0 5%;
+    border: 2px solid red;
+    padding-left: 20px;
+}
+
+.filterCategory {
+    display: flex;
+    align-items: center;
+    margin: 20px 0 0 5%;
+    border: 2px solid red;
+}

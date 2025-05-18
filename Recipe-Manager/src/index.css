@@ -1,0 +1,43 @@
+.searchBar {
+    display: flex;
+    align-items: center;
+    margin: 20px 0 0 5%;
+    width: 25%;
+    border: 2px solid red;
+    padding: 0.5rem;
+}
+
+.header {
+    display: flex;
+    border: 10px solid red;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownContent {
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdownContent a {
+    padding: 12px 16px;
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdownContent a:hover {
+    background-color: #f1f1f1;
+}
+
+.card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
