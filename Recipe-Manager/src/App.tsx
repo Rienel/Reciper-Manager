@@ -25,10 +25,13 @@ function App() {
             options={["< 30 mins", "1 hr", "1hr 30 mins", "> 2 hrs"]}
           />
         </div>
+
+        <div>
+          <RecipeList />
+        </div>
       </div>
-      <div>
-        <RecipeList />
-      </div>
+
+      {/* TODO: implement view and edit  */}
     </div>
   );
 }

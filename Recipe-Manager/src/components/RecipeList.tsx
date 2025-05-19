@@ -23,6 +23,7 @@ function RecipeList() {
   return (
     <>
       <AddRecipe onAdd={handleCLick} />
+      {/* TODO: make ui pop up */}
       {isAdding && (
         <div className="modal-overlay">
           <div className="modal-content">
