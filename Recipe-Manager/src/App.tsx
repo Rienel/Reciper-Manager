@@ -2,6 +2,7 @@ import DropdownFilter from "./components/DropdownFilter";
 import RecipeList from "./components/RecipeList";
 import Search from "./components/Search";
 import "./App.css";
+import AddRecipe from "./components/AddRecipe";
 
 function App() {
   return (
@@ -25,8 +26,9 @@ function App() {
           />
         </div>
       </div>
-
-      <RecipeList />
+      <div>
+        <RecipeList />
+      </div>
     </div>
   );
 }
