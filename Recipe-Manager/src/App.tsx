@@ -1,9 +1,29 @@
+import { useState } from "react";
 import DropdownFilter from "./components/DropdownFilter";
 import RecipeList from "./components/RecipeList";
 import Search from "./components/Search";
+import FilterIngredient from "./components/FilterIngredient";
+import { RecipeForm } from "./components/RecipeForm";
 import "./App.css";
+import AddRecipe from "./components/AddRecipe";
 
 function App() {
+  const [recipes, setRecipes] = useState<any[]>([]);
+  const [isAdding, setIsAdding] = useState(false);
+
+  const handleCLick = () => {
+    setIsAdding(true);
+  };
+
+  const handleSave = (newRecipe: any) => {
+    setRecipes((prev) => [...prev, newRecipe]);
+    setIsAdding(false);
+  };
+
+  const handleCancel = () => {
+    setIsAdding(false);
+  };
+
   return (
     <div className="appContainer">
       <div className="header">
@@ -24,10 +44,28 @@ function App() {
             options={["< 30 mins", "1 hr", "1hr 30 mins", "> 2 hrs"]}
           />
         </div>
+
+        <div className="filterIng">
+          <FilterIngredient />
+        </div>
+
+        <div>
+          <AddRecipe onAdd={handleCLick} />
+        </div>
       </div>
+
+      {isAdding && (
+        // TODO: make it more pop up
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <RecipeForm onSave={handleSave} onCancel={handleCancel} />
+          </div>
+        </div>
+      )}
+
       <div className="RecipeLists">
         <div>
-          <RecipeList />
+          <RecipeList recipes={recipes} />
         </div>
       </div>
       {/* TODO: implement view and edit  */}
