@@ -5,7 +5,8 @@ interface UICardProps {
   image: string;
   title: string;
   category: string;
-  text: string;
+  recipe: string;
+  instructions: string;
   time: string;
   servings: string;
   linkView: string;
@@ -16,7 +17,8 @@ const UICard: React.FC<UICardProps> = ({
   image,
   title,
   category,
-  text,
+  recipe,
+  instructions,
   time,
   servings,
   linkView,
@@ -30,7 +32,8 @@ const UICard: React.FC<UICardProps> = ({
           <h5 className="card-title">{title} </h5>
           <span className="category">{category}</span>
         </div>
-        <p className="card-text">{text}</p>
+        <p className="card-text">{recipe}</p>
+        <p className="card-text">{instructions}</p>
         <p className="card-text">
           {time} {servings}
         </p>

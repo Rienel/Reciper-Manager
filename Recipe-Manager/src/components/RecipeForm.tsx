@@ -12,7 +12,8 @@ export const RecipeForm: React.FC<ReciperFormProps> = ({
   const [recipe, setRecipe] = useState({
     image: "",
     title: "",
-    text: "",
+    recipe: "",
+    instructions: "",
     category: "",
     time: "",
     servings: "",
@@ -30,49 +31,58 @@ export const RecipeForm: React.FC<ReciperFormProps> = ({
   };
 
   return (
-    <div className="card" style={{ width: "18rem" }}>
-      <form onSubmit={handleSubmit} style={{ marginTop: "1rem" }}>
-        <input
-          className="card-title"
-          name="title"
-          placeholder="Title"
-          onChange={handleChange}
-          required
-        />
-        <input
-          className="category"
-          name="category"
-          placeholder="Category"
-          onChange={handleChange}
-          required
-        />
-        <input
-          className="card-text"
-          name="text"
-          placeholder="Description"
-          onChange={handleChange}
-          required
-        />
-        <input
-          className="card-text"
-          name="time"
-          placeholder="Time"
-          onChange={handleChange}
-          required
-        />
-        <input
-          className="card-text"
-          name="servings"
-          placeholder="Servings"
-          onChange={handleChange}
-          required
-        />
-        <button type="submit" className="btn btn-success">
-          Save
-        </button>
-        <button type="button" className="btn btn-info" onClick={onCancel}>
-          Cancel
-        </button>
+    <div className="CardContainer">
+      <form onSubmit={handleSubmit} className="CardFormWrapper">
+        <div className="CardImageHolder">Recipe Image</div>
+
+        <div className="CardContent">
+          <input
+            name="title"
+            placeholder="Title"
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="category"
+            placeholder="Category (e.g. Breakfast)"
+            onChange={handleChange}
+            required
+          />
+
+          <textarea
+            name="text"
+            placeholder="Recipe"
+            onChange={handleChange}
+            required
+          />
+          <textarea
+            name="instructions"
+            placeholder="Instruction"
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="time"
+            placeholder="Time (e.g. 25 min)"
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="servings"
+            placeholder="Servings (e.g. 2)"
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="CardBtn">
+          <button type="submit" className="btn btn-primary">
+            Save
+          </button>
+          <button type="button" className="btn btn-info" onClick={onCancel}>
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );
