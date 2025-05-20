@@ -7,11 +7,6 @@
     padding: 0.5rem;
 }
 
-.header {
-    display: flex;
-    border: 10px solid red;
-}
-
 .dropdown {
     position: relative;
     display: inline-block;
@@ -114,4 +109,11 @@
     justify-content: space-between;
     padding: 0 1rem 1rem;
     gap: 0.5rem;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3rem;
+  padding: 4rem;
 }

@@ -1,14 +1,27 @@
-.time {
+.appContainer {
     display: flex;
+    flex-direction: column;
+}
+/* TODO: finish header ui */
+.header {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    margin: 35px 0 0 5%;
-    border: 2px solid red;
-    padding-left: 20px;
+    border: 1px solid red;
 }
 
-.filterCategory {
+.header .searchBar {
+    margin: 10px 20px 10px 10px;
+}
+
+.header .filterCont {
     display: flex;
-    align-items: center;
-    margin: 20px 0 0 5%;
-    border: 2px solid red;
+    margin: 10px 10px 10px 10px;
+}
+
+.RecipeLists {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 1rem; 
+  padding: 1rem;
 }

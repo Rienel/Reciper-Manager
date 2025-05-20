@@ -1,6 +1,6 @@
 function Search() {
   // TODO: implement search
-  return <h3>Seach...</h3>;
+  return <p>Seach...</p>;
 }
 
 export default Search;

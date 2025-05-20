@@ -31,9 +31,11 @@ function RecipeList() {
           </div>
         </div>
       )}
-      {recipes.map((recipe, idx) => (
-        <UICard key={idx} {...recipe} />
-      ))}
+      <div className="cardGrid">
+        {recipes.map((recipe, idx) => (
+          <UICard key={idx} {...recipe} />
+        ))}
+      </div>
     </>
   );
 }
