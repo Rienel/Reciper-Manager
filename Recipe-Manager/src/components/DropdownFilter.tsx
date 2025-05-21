@@ -4,11 +4,21 @@ import "../index.css";
 interface DropdownFilterProps {
   label: string;
   options: string[];
+  onSelected: (term: string) => void;
 }
 
-const DropdownFilter: React.FC<DropdownFilterProps> = ({ label, options }) => {
+const DropdownFilter: React.FC<DropdownFilterProps> = ({
+  label,
+  options,
+  onSelected,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const handleSelect = (value: string) => {
+    onSelected(value);
+    setIsOpen(false);
+  };
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
@@ -27,16 +37,24 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({ label, options }) => {
   }, []);
 
   return (
-    <div className="dropdown" ref={dropdownRef}>
-      <button onClick={toggleDropdown}>{label}</button>
+    <div className="custome-dropdown" ref={dropdownRef}>
+      <button className="dropdown-btn" onClick={toggleDropdown}>
+        {label}
+      </button>
       {isOpen && (
-        <div className="dropdownContent">
+        <ul className="dropdown-list">
           {options.map((option, index) => (
-            <a href="#" key={index}>
-              {option}
-            </a>
+            <li
+              key={index}
+              className="dropdown-item"
+              onClick={() => handleSelect(option)}
+            >
+              <a className="dropdown-item" key={index}>
+                {option}
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );

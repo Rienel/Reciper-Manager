@@ -11,6 +11,8 @@ function App() {
   const [recipes, setRecipes] = useState<any[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [search, setSearch] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [timeFilter, setTimeFilter] = useState("");
 
   const handleCLick = () => {
     setIsAdding(true);
@@ -25,9 +27,16 @@ function App() {
     setIsAdding(false);
   };
 
-  const searchedRecipes = recipes.filter((recipe) =>
-    recipe.title.toLowerCase().includes(search.toLowerCase())
-  );
+  const filterRecipes = recipes.filter((recipe) => {
+    const matchSearch = recipe.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    const matchCategory = categoryFilter
+      ? recipe.category === categoryFilter
+      : true;
+    const matchTime = timeFilter ? recipe.time === timeFilter : true;
+    return matchCategory && matchSearch && matchTime;
+  });
 
   return (
     <div className="appContainer">
@@ -40,6 +49,7 @@ function App() {
           <DropdownFilter
             label="Category"
             options={["Breakfast", "Lunch", "Dinner", "Dessert"]}
+            onSelected={(value) => setCategoryFilter(value)}
           />
         </div>
 
@@ -47,6 +57,7 @@ function App() {
           <DropdownFilter
             label="Time"
             options={["< 30 mins", "1 hr", "1hr 30 mins", "> 2 hrs"]}
+            onSelected={(value) => setTimeFilter(value)}
           />
         </div>
 
@@ -68,7 +79,7 @@ function App() {
       )}
 
       <div className="RecipeLists">
-        <RecipeList recipes={searchedRecipes} />
+        <RecipeList recipes={filterRecipes} />
       </div>
     </div>
   );
