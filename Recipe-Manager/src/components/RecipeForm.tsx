@@ -35,6 +35,7 @@ export const RecipeForm: React.FC<ReciperFormProps> = ({
       <form onSubmit={handleSubmit} className="CardFormWrapper">
         <div className="CardImageHolder">Recipe Image</div>
 
+        {/* TODO: instead of input, make it select instead */}
         <div className="CardContent">
           <input
             name="title"
