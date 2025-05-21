@@ -10,6 +10,7 @@ import AddRecipe from "./components/AddRecipe";
 function App() {
   const [recipes, setRecipes] = useState<any[]>([]);
   const [isAdding, setIsAdding] = useState(false);
+  const [search, setSearch] = useState("");
 
   const handleCLick = () => {
     setIsAdding(true);
@@ -24,11 +25,15 @@ function App() {
     setIsAdding(false);
   };
 
+  const searchedRecipes = recipes.filter((recipe) =>
+    recipe.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div className="appContainer">
       <div className="header">
         <div className="searchBar">
-          <Search />
+          <Search onSearch={setSearch} />
         </div>
 
         <div className="filterCont">
@@ -55,7 +60,6 @@ function App() {
       </div>
 
       {isAdding && (
-        // TODO: make it more pop up
         <div className="modal-overlay">
           <div className="modal-content">
             <RecipeForm onSave={handleSave} onCancel={handleCancel} />
@@ -64,11 +68,8 @@ function App() {
       )}
 
       <div className="RecipeLists">
-        <div>
-          <RecipeList recipes={recipes} />
-        </div>
+        <RecipeList recipes={searchedRecipes} />
       </div>
-      {/* TODO: implement view and edit  */}
     </div>
   );
 }
