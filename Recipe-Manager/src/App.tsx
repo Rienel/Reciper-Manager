@@ -7,40 +7,89 @@ import { RecipeForm } from "./components/RecipeForm";
 import "./App.css";
 import AddRecipe from "./components/AddRecipe";
 
+interface Recipe {
+  image: string;
+  title: string;
+  recipe: string;
+  instructions: string;
+  category: string;
+  time: string;
+  servings: string;
+  ingredients: string[];
+}
+
 function App() {
-  const [recipes, setRecipes] = useState<any[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [timeFilter, setTimeFilter] = useState("");
   const [ingredientFilter, setIngredientFilter] = useState<string[]>([]);
+  const [availableIngredients, setAvailableIngredients] = useState<string[]>(
+    []
+  );
 
   useEffect(() => {
-    const storedRecipes = localStorage.getItem("recipes");
-    if (storedRecipes) {
-      try {
-        setRecipes(JSON.parse(storedRecipes));
-      } catch (err) {
-        console.error("Failed to parse stored recipes:", err);
+    try {
+      const storedRecipes = localStorage.getItem("recipes");
+      console.log("Loading from localStorage:", storedRecipes);
+      if (storedRecipes) {
+        const parsedRecipes: Recipe[] = JSON.parse(storedRecipes);
+        if (Array.isArray(parsedRecipes)) {
+          setRecipes(parsedRecipes);
+          console.log("Recipes loaded:", parsedRecipes);
+        } else {
+          console.error("Stored recipes is not an array");
+          localStorage.removeItem("recipes");
+        }
+      } else {
+        console.log("No recipes in localStorage");
       }
+    } catch (err) {
+      console.error("Failed to load recipes from localStorage:", err);
+      localStorage.removeItem("recipes");
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("recipes", JSON.stringify(recipes));
+    try {
+      console.log("Saving recipes to localStorage:", recipes);
+      localStorage.setItem("recipes", JSON.stringify(recipes));
+
+      const allIngredients = recipes
+        .flatMap((recipe) => recipe.ingredients)
+        .filter((ingredient) => ingredient.trim() !== "");
+      const uniqueIngredients = [...new Set(allIngredients)].sort();
+      setAvailableIngredients(uniqueIngredients);
+      console.log("Available ingredients updated:", uniqueIngredients);
+    } catch (err) {
+      console.error("Failed to save recipes to localStorage:", err);
+    }
   }, [recipes]);
 
   const handleClick = () => {
     setIsAdding(true);
   };
 
-  const handleSave = (newRecipe: any) => {
-    setRecipes((prev) => [...prev, newRecipe]);
+  const handleSave = (newRecipe: Recipe) => {
+    console.log("Saving new recipe:", newRecipe);
+    setRecipes((prev) => {
+      const updatedRecipes = [...prev, newRecipe];
+      console.log("Updated recipes state:", updatedRecipes);
+      return updatedRecipes;
+    });
     setIsAdding(false);
   };
 
   const handleCancel = () => {
     setIsAdding(false);
+  };
+
+  const handleClearRecipes = () => {
+    setRecipes([]);
+    setAvailableIngredients([]);
+    localStorage.removeItem("recipes");
+    console.log("Recipes and ingredients cleared from localStorage");
   };
 
   const filterRecipes = recipes.filter((recipe) => {
@@ -53,7 +102,9 @@ function App() {
     const matchTime = timeFilter ? recipe.time === timeFilter : true;
     const matchIngredients = ingredientFilter.length
       ? ingredientFilter.every((ing) =>
-          recipe.recipe.toLowerCase().includes(ing.toLowerCase())
+          recipe.ingredients.some((recipeIng) =>
+            recipeIng.toLowerCase().includes(ing.toLowerCase())
+          )
         )
       : true;
     return matchCategory && matchSearch && matchTime && matchIngredients;
@@ -83,12 +134,23 @@ function App() {
         </div>
 
         <div className="filterIng">
-          <FilterIngredient onFilter={setIngredientFilter} />
+          <FilterIngredient
+            onFilter={setIngredientFilter}
+            availableIngredients={availableIngredients}
+          />
         </div>
 
         <div>
           <AddRecipe onAdd={handleClick} />
         </div>
+
+        <button
+          className="btn btn-danger"
+          onClick={handleClearRecipes}
+          style={{ margin: "0.5rem" }}
+        >
+          Clear Recipes
+        </button>
       </div>
 
       {isAdding && (

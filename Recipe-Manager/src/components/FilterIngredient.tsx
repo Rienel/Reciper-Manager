@@ -3,24 +3,16 @@ import "../index.css";
 
 interface FilterIngredientProps {
   onFilter: (ingredients: string[]) => void;
+  availableIngredients: string[];
 }
 
-const FilterIngredient: React.FC<FilterIngredientProps> = ({ onFilter }) => {
+const FilterIngredient: React.FC<FilterIngredientProps> = ({
+  onFilter,
+  availableIngredients,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Sample ingredients list (can be dynamic in a real app)
-  const availableIngredients = [
-    "Chicken",
-    "Beef",
-    "Vegetables",
-    "Cheese",
-    "Pasta",
-    "Tomato",
-    "Eggs",
-    "Milk",
-  ];
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
@@ -60,17 +52,21 @@ const FilterIngredient: React.FC<FilterIngredientProps> = ({ onFilter }) => {
       </button>
       {isOpen && (
         <ul className="dropdown-list">
-          {availableIngredients.map((ingredient) => (
-            <li
-              key={ingredient}
-              className={`dropdown-item ${
-                selectedIngredients.includes(ingredient) ? "selected" : ""
-              }`}
-              onClick={() => handleIngredientToggle(ingredient)}
-            >
-              {ingredient}
-            </li>
-          ))}
+          {availableIngredients.length > 0 ? (
+            availableIngredients.map((ingredient) => (
+              <li
+                key={ingredient}
+                className={`dropdown-item ${
+                  selectedIngredients.includes(ingredient) ? "selected" : ""
+                }`}
+                onClick={() => handleIngredientToggle(ingredient)}
+              >
+                {ingredient}
+              </li>
+            ))
+          ) : (
+            <li className="dropdown-item">No ingredients available</li>
+          )}
         </ul>
       )}
     </div>
