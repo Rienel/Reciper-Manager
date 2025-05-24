@@ -20,9 +20,15 @@ export const RecipeForm: React.FC<ReciperFormProps> = ({
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     setRecipe({ ...recipe, [e.target.name]: e.target.value });
+  };
+
+  const handleCategorySelect = (category: string) => {
+    setRecipe((prev) => ({ ...prev, category }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -43,15 +49,26 @@ export const RecipeForm: React.FC<ReciperFormProps> = ({
             onChange={handleChange}
             required
           />
-          <input
-            name="category"
-            placeholder="Category (e.g. Breakfast)"
-            onChange={handleChange}
-            required
-          />
+
+          <div className="category-options">
+            {["Breakfast", "Lunch", "Brunch", "Dinner", "Dessert"].map(
+              (cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  className={`category-btn ${
+                    recipe.category === cat ? "selected" : ""
+                  }`}
+                  onClick={() => handleCategorySelect(cat)}
+                >
+                  {cat}
+                </button>
+              )
+            )}
+          </div>
 
           <textarea
-            name="text"
+            name="recipe"
             placeholder="Recipe"
             onChange={handleChange}
             required
@@ -63,11 +80,15 @@ export const RecipeForm: React.FC<ReciperFormProps> = ({
             required
           />
           <input
+            type="time"
             name="time"
-            placeholder="Time (e.g. 25 min)"
-            onChange={handleChange}
+            value={recipe.time}
+            onChange={(e) =>
+              setRecipe((prev) => ({ ...prev, time: e.target.value }))
+            }
             required
           />
+
           <input
             name="servings"
             placeholder="Servings (e.g. 2)"

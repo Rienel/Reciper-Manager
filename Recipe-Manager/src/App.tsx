@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DropdownFilter from "./components/DropdownFilter";
 import RecipeList from "./components/RecipeList";
 import Search from "./components/Search";
@@ -13,6 +13,21 @@ function App() {
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [timeFilter, setTimeFilter] = useState("");
+
+  useEffect(() => {
+    const storedRecipes = localStorage.getItem("recipes");
+    if (storedRecipes) {
+      try {
+        setRecipes(JSON.parse(storedRecipes));
+      } catch (err) {
+        console.error("Failed to parse stored recipes:", err);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("recipes", JSON.stringify(recipes));
+  }, [recipes]);
 
   const handleCLick = () => {
     setIsAdding(true);

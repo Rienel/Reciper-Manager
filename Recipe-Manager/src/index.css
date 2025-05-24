@@ -133,3 +133,37 @@
   gap: 3rem;
   padding: 4rem;
 }
+
+
+
+.category-options {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.category-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: background 0.2s;
+}
+
+.category-btn:hover {
+  background: #e0e0e0;
+}
+
+.category-btn.selected {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.timeSelectGroup {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
