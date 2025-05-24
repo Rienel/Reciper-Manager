@@ -13,6 +13,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [timeFilter, setTimeFilter] = useState("");
+  const [ingredientFilter, setIngredientFilter] = useState<string[]>([]);
 
   useEffect(() => {
     const storedRecipes = localStorage.getItem("recipes");
@@ -29,7 +30,7 @@ function App() {
     localStorage.setItem("recipes", JSON.stringify(recipes));
   }, [recipes]);
 
-  const handleCLick = () => {
+  const handleClick = () => {
     setIsAdding(true);
   };
 
@@ -50,7 +51,12 @@ function App() {
       ? recipe.category === categoryFilter
       : true;
     const matchTime = timeFilter ? recipe.time === timeFilter : true;
-    return matchCategory && matchSearch && matchTime;
+    const matchIngredients = ingredientFilter.length
+      ? ingredientFilter.every((ing) =>
+          recipe.recipe.toLowerCase().includes(ing.toLowerCase())
+        )
+      : true;
+    return matchCategory && matchSearch && matchTime && matchIngredients;
   });
 
   return (
@@ -77,11 +83,11 @@ function App() {
         </div>
 
         <div className="filterIng">
-          <FilterIngredient />
+          <FilterIngredient onFilter={setIngredientFilter} />
         </div>
 
         <div>
-          <AddRecipe onAdd={handleCLick} />
+          <AddRecipe onAdd={handleClick} />
         </div>
       </div>
 
