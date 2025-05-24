@@ -1,27 +1,60 @@
 .appContainer {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
-/* TODO: finish header ui */
+
 .header {
     display: flex;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: space-between;
     align-items: center;
-    border: 1px solid red;
+    padding: 1rem 2rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    gap: 1rem;
 }
 
 .header .searchBar {
-    margin: 10px 20px 10px 10px;
+    flex: 1 1 25%;
+    min-width: 200px;
+    margin: 0;
 }
 
 .header .filterCont {
-    display: flex;
-    margin: 10px 10px 10px 10px;
+    flex: 0 1 auto;
+    min-width: 150px;
+    margin: 0.5rem;
+}
+
+.header .filterIng {
+    flex: 0 1 auto;
+    min-width: 150px;
+    margin: 0.5rem;
+}
+
+.header .btn-primary {
+    flex: 0 0 auto;
+    margin: 0.5rem;
 }
 
 .RecipeLists {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); 
-  gap: 1rem; 
-  padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: 1rem;
+    padding: 2rem;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .header .searchBar,
+    .header .filterCont,
+    .header .filterIng {
+        width: 100%;
+        max-width: 100%;
+    }
 }

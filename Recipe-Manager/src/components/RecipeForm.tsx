@@ -1,14 +1,12 @@
 import React, { useState } from "react";
+import "../index.css";
 
-interface ReciperFormProps {
+interface RecipeFormProps {
   onSave: (recipe: any) => void;
   onCancel: () => void;
 }
 
-export const RecipeForm: React.FC<ReciperFormProps> = ({
-  onCancel,
-  onSave,
-}) => {
+export const RecipeForm: React.FC<RecipeFormProps> = ({ onCancel, onSave }) => {
   const [recipe, setRecipe] = useState({
     image: "",
     title: "",
@@ -17,6 +15,7 @@ export const RecipeForm: React.FC<ReciperFormProps> = ({
     category: "",
     time: "",
     servings: "",
+    ingredients: [] as string[],
   });
 
   const handleChange = (
@@ -34,6 +33,16 @@ export const RecipeForm: React.FC<ReciperFormProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSave(recipe);
+    setRecipe({
+      image: "",
+      title: "",
+      recipe: "",
+      instructions: "",
+      category: "",
+      time: "",
+      servings: "",
+      ingredients: [],
+    });
   };
 
   return (
@@ -41,11 +50,11 @@ export const RecipeForm: React.FC<ReciperFormProps> = ({
       <form onSubmit={handleSubmit} className="CardFormWrapper">
         <div className="CardImageHolder">Recipe Image</div>
 
-        {/* TODO: instead of input, make it select instead */}
         <div className="CardContent">
           <input
             name="title"
-            placeholder="Title"
+            placeholder="Recipe Title"
+            value={recipe.title}
             onChange={handleChange}
             required
           />
@@ -69,29 +78,38 @@ export const RecipeForm: React.FC<ReciperFormProps> = ({
 
           <textarea
             name="recipe"
-            placeholder="Recipe"
+            placeholder="Ingredients (one per line)"
+            value={recipe.recipe}
             onChange={handleChange}
             required
           />
           <textarea
             name="instructions"
-            placeholder="Instruction"
+            placeholder="Instructions"
+            value={recipe.instructions}
             onChange={handleChange}
             required
           />
-          <input
-            type="time"
+          <select
             name="time"
             value={recipe.time}
-            onChange={(e) =>
-              setRecipe((prev) => ({ ...prev, time: e.target.value }))
-            }
+            onChange={handleChange}
             required
-          />
-
+            className="form-select"
+          >
+            <option value="" disabled>
+              Select Time
+            </option>
+            {["< 30 mins", "1 hr", "1hr 30 mins", "> 2 hrs"].map((time) => (
+              <option key={time} value={time}>
+                {time}
+              </option>
+            ))}
+          </select>
           <input
             name="servings"
             placeholder="Servings (e.g. 2)"
+            value={recipe.servings}
             onChange={handleChange}
             required
           />
