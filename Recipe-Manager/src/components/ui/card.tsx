@@ -9,8 +9,6 @@ interface UICardProps {
   instructions: string;
   time: string;
   servings: string;
-  linkView: string;
-  linkEdit: string;
 }
 
 const UICard: React.FC<UICardProps> = ({
@@ -21,36 +19,26 @@ const UICard: React.FC<UICardProps> = ({
   instructions,
   time,
   servings,
-  linkView,
-  linkEdit,
 }) => {
   return (
     <div className="card" style={{ width: "18rem" }}>
-      <img src={image} className="card-img-top" alt={title} />
+      <div className="card-img-top CardImageHolder">
+        {image ? <img src={image} alt={title} /> : "Recipe Image"}
+      </div>
       <div className="card-body">
         <div className="card-head">
-          <h5 className="card-title">{title} </h5>
+          <h5 className="card-title">{title}</h5>
           <span className="category">{category}</span>
         </div>
-        <p className="card-text">{recipe}</p>
-        <p className="card-text">{instructions}</p>
         <p className="card-text">
-          {time} {servings}
+          <strong>Ingredients:</strong> {recipe}
         </p>
-        <a
-          href={linkView}
-          className="btn btn-primary"
-          style={{ margin: "0 10px 0 0" }}
-        >
-          View
-        </a>
-        <a
-          href={linkEdit}
-          className="btn btn-primary"
-          style={{ margin: "0 0 0 40%" }}
-        >
-          Edit
-        </a>
+        <p className="card-text">
+          <strong>Instructions:</strong> {instructions.slice(0, 100)}...
+        </p>
+        <p className="card-text">
+          <strong>Time:</strong> {time} | <strong>Servings:</strong> {servings}
+        </p>
       </div>
     </div>
   );
